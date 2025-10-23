@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌿 PlantAID - Prediction Result</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+    }
+
+    /* Fullscreen background */
+    body {
+      background: url("{{ url_for('static', filename='images/plant_doctor_bg.jpg') }}") no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Dark overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.55);
+      z-index: 0;
+    }
+
+    /* Glassmorphism card */
+    .result-card {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      width: 90%;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      padding: 40px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .result-card h2 {
+      font-weight: 700;
+      color: #00ffb3;
+      margin-bottom: 25px;
+      text-shadow: 0 0 15px rgba(0,255,153,0.6);
+    }
+
+    .plant-img {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 15px;
+      border: 3px solid rgba(255,255,255,0.3);
+      margin-bottom: 25px;
+      transition: transform 0.3s ease;
+    }
+
+    .plant-img:hover { transform: scale(1.05); }
+
+    .disease { font-size: 1.4rem; font-weight: 600; color: #ff6b6b; margin-bottom: 10px; }
+    .confidence { font-size: 1.2rem; color: #4ef037; margin-bottom: 20px; }
+
+    .section-title {
+      font-weight: 600;
+      color: #00d9ff;
+      margin-top: 20px;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .info-text {
+      font-size: 1rem;
+      color: #e0e0e0;
+      margin-top: 8px;
+      line-height: 1.6;
+      white-space: pre-line;
+      padding: 10px 15px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      border-left: 3px solid #00ffb3;
+    }
+
+    .btn-home {
+      margin-top: 25px;
+      margin-right: 10px;
+      padding: 12px 25px;
+      font-weight: 600;
+      border-radius: 30px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-home:hover { transform: translateY(-2px); }
+
+    @media (max-width: 768px) {
+      .result-card { padding: 30px 20px; }
+      .btn-home { width: 100%; margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Dark overlay -->
+  <div class="overlay"></div>
+
+  <!-- Result Card -->
+  <div class="result-card">
+    <h2>🌱 Plant Disease Prediction Result</h2>
+    <img src="{{ url_for('static', filename='uploads/' + filename) }}" class="plant-img" alt="Uploaded Plant Image">
+    
+    <div class="disease">Disease Detected: {{ label or "Unknown" }}</div>
+    <div class="confidence">Confidence: {{ confidence or "N/A" }}%</div>
+
+    <div class="section-title">Prevention</div>
+    <div class="info-text">
+      {{ prevention if prevention else "No prevention data available." }}
+    </div>
+
+    <div class="section-title">Cure</div>
+    <div class="info-text">
+      {{ cure if cure else "No cure data available." }}
+    </div>
+
+    <div>
+      <a href="{{ url_for('home') }}" class="btn btn-success btn-home">🔍 Predict Another</a>
+      <a href="{{ url_for('show_history') }}" class="btn btn-outline-light btn-home">📜 View History</a>
+    </div>
+  </div>
+</body>
+</html>

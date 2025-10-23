@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌿 PlantAID - Prediction History</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      background: url("{{ url_for('static', filename='images/plant_doctor_bg.jpg') }}") no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      overflow-y: auto;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 60px 20px;
+      width: 100%;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: #00ffb3;
+      text-shadow: 0 0 15px rgba(0,255,153,0.6);
+    }
+
+    .history-card {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .history-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,255,153,0.4);
+    }
+
+    .plant-img {
+      width: 100%;
+      border-radius: 15px;
+      border: 2px solid rgba(255,255,255,0.3);
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .plant-img:hover {
+      transform: scale(1.05);
+    }
+
+    h5 {
+      font-weight: 600;
+      color: #ff6b6b;
+      margin-bottom: 8px;
+    }
+
+    h6 {
+      color: #4ef037;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #00d9ff;
+      margin-top: 12px;
+    }
+
+    .info-text {
+      font-size: 0.95rem;
+      color: #e0e0e0;
+      margin-top: 6px;
+      line-height: 1.5;
+      white-space: pre-line;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      border-left: 3px solid #00ffb3;
+    }
+
+    .btn-home {
+      margin-top: 30px;
+      padding: 12px 30px;
+      font-weight: 600;
+      border-radius: 30px;
+      font-size: 1rem;
+      width: 220px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .btn-home:hover {
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      text-shadow: 0 0 8px rgba(0,255,128,0.6);
+    }
+
+    @media (max-width: 768px) {
+      h2 {
+        font-size: 2.2rem;
+      }
+      .btn-home {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="container">
+    <h2>🌿 Prediction History</h2>
+
+    <div class="row gy-4">
+      {% if records %}
+        {% for record in records %}
+        <div class="col-md-6 col-lg-4">
+          <div class="history-card">
+            <img src="{{ url_for('static', filename='uploads/' + record.filename) }}" class="plant-img" alt="Plant Image">
+            <h5>🧬 {{ record.label }}</h5>
+            <h6>Confidence: {{ record.confidence }}%</h6>
+
+            <div class="section-title">🌱 Prevention</div>
+            <div class="info-text">{{ record.prevention }}</div>
+
+            <div class="section-title">💊 Cure</div>
+            <div class="info-text">{{ record.cure }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-center text-light">No predictions yet. Upload a plant image to see results here.</p>
+      {% endif %}
+    </div>
+
+    <div class="text-center">
+      <a href="{{ url_for('home') }}" class="btn btn-success btn-home">🔍 Predict Another</a>
+    </div>
+
+    <div class="footer">
+      © 2025 PlantAID | Empowering Sustainable Agriculture 🌱
+    </div>
+  </div>
+</body>
+</html>
