@@ -26,4 +26,4 @@ Format: JPEG and PNG images.
 Annotations: Each image is labeled with the corresponding crop and disease information.
 
 📥 Dataset Access:
-You can access and download the dataset from Kaggle using the following link:https://www.kaggle.com/datasets/five-crop-diseases-dataset
+You can access and download the dataset from Kaggle using the following link:https://www.kaggle.com/datasets/shubham2703/five-crop-diseases-dataset
